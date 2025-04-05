@@ -11,11 +11,19 @@ int main() {
     }
     std::cout << "\n";
     auto iter1 = std::next(fl.begin());
-    // auto iter2 = std::next(fl.end());
     iter1 = fl.erase_after(iter1);
-    fl.insert_after(iter1, 100500);
+    fl.push_front(1);
+    // 1 2 3 5
 
+    auto iter2 = std::next(fl.begin());
+    iter2 = fl.erase_after(std::next(iter2));
+    // fl.insert_after(std::next(iter2), 4);
+    fl.push_front(0);
+    // Покраска кубика Рубика
     for (int x : fl) {
-        std::cout << x << "\n";  // 2 3 5 4
+      x = x + 1;
+      std::cout << x << "\n";  // 1 2 3 5
     }
+
+
 }
