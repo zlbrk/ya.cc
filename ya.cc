@@ -1,17 +1,28 @@
 #include <iostream>
-#include <list>
+#include <map>
+#include <string>
 
 int main() {
-    std::list<int> v = {1, 2, 3, 4}; // сначала это был вектор
+  // инициализируем map набором пар {ключ, значение}
+  std::map<std::string, int> years = {
+    {"Moscow", 1147},
+    {"Rome", -753},
+    {"London", 47},
+  };
 
-    auto iter = v.begin();  // итератор
-    int* ptr = &v.front();  // указатель
-    int& ref = v.front();  // ссылка
+  for (const auto& [city, year] : years) {
+    std::cout << city << ": " << year << "\n";
+  }
 
-    std::cout << *iter << " " << *ptr << " " << ref << "\n";  // 1 1 1
+  std::cout << "\nwithout auto\n";
 
-    v.push_back(5);  // происходит реаллокация
-
-    // обращаться к старым итераторам, указателям и ссылкам больше нельзя:
-    std::cout << *iter << " " << *ptr << " " << ref << "\n";  // неопределённое поведение!
+  // если бы не было автовыведения типов, то
+  // пришлось бы писать полностью
+  for (const std::pair<const std::string, int>& item : years) {
+    // иными словами, в примере элементами контейнера map
+    // являются пары типа std::pair<const std::string, int>,
+    //
+    std::cout << item.first << ": " << item.second << "\n";
+  }
+  return 0;
 }
