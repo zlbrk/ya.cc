@@ -1,47 +1,35 @@
 #include <iostream>
-#include <iterator>
-#include <map>
-#include <string>
+#include <unordered_map>
 
-// Итераторы ассоциативных контейнеров
-// контейнеры map и set и их мультиверсии 
-// предоставляют итераторы, которые можно сдвигать
-// на соседние позиции вперёд и назад 
+// перегруженная версия erase
 
 int main() {
-  std::map<int, std::string> numbers = {
-    {100, "hundred"},
-    {3, "three"},
-    {42, "forty two"},
-    {11, "eleven"},
+  std::unordered_multimap<std::string, int> data = {
+    {"a", 1},
+    {"a", 2},
+    {"a", 3},
+    {"b", 4}    
   };
   
-  auto iter = numbers.find(11);
+  auto iter = data.find("a");
     
-  if (iter != numbers.end()) {
+  if (iter != data.end()) {
     // печатаем найденный элемент
-    const auto& [key, value] = *iter;
-    std::cout << "Found: " << key << ": " << value << "\n";
-    // Found: 11: eleven
+    data.erase(iter);
+    // удаляем первое  найденное вхождение
+    // с ключом "a"
+  } 
+  std::cout << "Before erase(\"a\"):\n";
+  for (const auto& [key, val] : data) {
+    std::cout << key << "\t" << val << "\n"; 
+  }
+  std::cout << "\n";
 
-    // печатаем предыдущий элемент
-    if (iter != numbers.begin()) {
-      const auto& [key, value] = *std::prev(iter);
-      std::cout << "Previous: " << key << ": " << value << "\n";
-      // Previous: 3: three
-    } else {
-      std::cout << "No previous element\n";
-    }
+  data.erase("a");
+  std::cout << "After erase(\"a\"):\n";
 
-    // печатаем следующий элемент
-    if (auto nextIter = std::next(iter); nextIter != numbers.end()) {
-      const auto& [key, value] = *nextIter;
-      std::cout << "Next: " << key << ": " << value << "\n";
-    } else {
-      std::cout << "No next element\n";
-    }
-  } else {
-    std::cout << "Not found\n";
+  for (const auto& [key, val] : data) {
+    std::cout << key << "\t" << val << "\n"; 
   }
 
   return 0;
