@@ -1,36 +1,31 @@
 #include <iostream>
-#include <unordered_map>
+#include <algorithm>
+#include <vector>
+// обычно предполагается, что итераторы, передаваемые в функции
+// из библиотеки <algorithm>, получают два итератора
+// первый из которых указывает на начальный элемент контейнера,
+// а второй "за последний" элемент
 
-// перегруженная версия erase
+// если контейнер допускает движение по ит-рам в
+// обе стороны, то у него есть две доп. функции:
+// rbegin(), возвращающая итератор, ук. на последний эл-т, и
+// функция rend(), возвращающая ит-р, ук. за первый эл-т.
 
+// Это пример сортировки середины списка, без 
+// первого и последнего эл-тов.
+void printvec (const char* vname ,const std::vector<int>& vec) {
+  std::cout << vname << ": [";
+  for (int el : vec) {
+    std::cout << el << ", ";
+  }
+  std::cout << "\b\b]\n";
+}
 int main() {
-  std::unordered_multimap<std::string, int> data = {
-    {"a", 1},
-    {"a", 2},
-    {"a", 3},
-    {"b", 4}    
-  };
-  
-  auto iter = data.find("a");
-    
-  if (iter != data.end()) {
-    // печатаем найденный элемент
-    data.erase(iter);
-    // удаляем первое  найденное вхождение
-    // с ключом "a"
-  } 
-  std::cout << "Before erase(\"a\"):\n";
-  for (const auto& [key, val] : data) {
-    std::cout << key << "\t" << val << "\n"; 
-  }
-  std::cout << "\n";
-
-  data.erase("a");
-  std::cout << "After erase(\"a\"):\n";
-
-  for (const auto& [key, val] : data) {
-    std::cout << key << "\t" << val << "\n"; 
-  }
+  std::vector<int> data = {100, 42, 17, 80, 20, 0};
+  printvec("init data", data);
+  // std::cout << "line";
+  std::sort(data.begin() + 1, data.end() - 1);  // 100, 17, 20, 42, 80, 0
+  printvec("sorted data", data);
 
   return 0;
 }
